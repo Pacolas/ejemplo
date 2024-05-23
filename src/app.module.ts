@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -9,13 +10,16 @@ import { ArtistModule } from './artist/artist.module';
 import { MovementModule } from './movement/movement.module';
 import { ImageModule } from './image/image.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ArtistEntity } from './artist/artist.entity/artist.entity';
-import { ArtworkEntity } from './artwork/artwork.entity/artwork.entity';
-import { ExhibitionEntity } from './exhibition/exhibition.entity/exhibition.entity';
-import { ImageEntity } from './image/image.entity/image.entity';
-import { MovementEntity } from './movement/movement.entity/movement.entity';
-import { MuseumEntity } from './museum/museum.entity/museum.entity';
-import { SponsorEntity } from './sponsor/sponsor.entity/sponsor.entity';
+import { ArtistEntity } from './artist/artist.entity';
+import { ArtworkEntity } from './artwork/artwork.entity';
+import { ExhibitionEntity } from './exhibition/exhibition.entity';
+import { ImageEntity } from './image/image.entity';
+import { MovementEntity } from './movement/movement.entity';
+import { MuseumEntity } from './museum/museum.entity';
+import { SponsorEntity } from './sponsor/sponsor.entity';
+import { MuseumArtworkModule } from './museum-artwork/museum-artwork.module';
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [MuseumModule, ExhibitionModule, ArtworkModule, SponsorModule, ImageModule, ArtistModule, MovementModule,
     TypeOrmModule.forRoot({
@@ -23,13 +27,16 @@ import { SponsorEntity } from './sponsor/sponsor.entity/sponsor.entity';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'postgres',
-      database: 'museum',
+      password: 'password',
+      database: 'museums',
       entities: [ArtistEntity, ArtworkEntity, ExhibitionEntity, ImageEntity, MovementEntity, MuseumEntity, SponsorEntity],
       dropSchema: true,
       synchronize: true,
       keepConnectionAlive: true
     }),
+    MuseumArtworkModule,
+    UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
